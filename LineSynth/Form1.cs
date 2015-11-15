@@ -30,7 +30,14 @@ namespace LineSynth
         {
             ReadData();
 
-            ReadAtomData("OI.txt", 8, 0);
+            ReadAtomData("atom\\C_I.txt");
+            ReadAtomData("atom\\N_I.txt");
+            ReadAtomData("atom\\O_I.txt");
+            ReadAtomData("atom\\Na_I.txt");
+            ReadAtomData("atom\\Mg_I.txt");
+            ReadAtomData("atom\\K_I.txt ");
+            ReadAtomData("atom\\Ca_I.txt");
+            ReadAtomData("atom\\Fe_I.txt");
 
             PlotSinCos();
         }
