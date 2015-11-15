@@ -94,9 +94,10 @@ namespace LineSynth
             using (StreamWriter w = new StreamWriter(fn+".txt"))   //@"OI.txt"
             {
                 double d;
-                string line="", s;
+                string line="", s, s1;
 
                 // 先頭1行基本データ取得
+                // E0[eV] g0 　原子番号　　中性・イオン　呼び名
                 line = r.ReadLine();
                 string[] stArrayData = line.Split(' ');
 
@@ -115,51 +116,53 @@ namespace LineSynth
                     line = r.ReadLine();
                     //richTextBox1.AppendText(line);
                 }
-                int base_pos = line.IndexOf("|");
                 while ((line = r.ReadLine()) != null) // 1行ずつ読み出し。
                 {
+                    string[] linesp = line.Split('|');
                     // wavelenth
-                    s = line.Substring(base_pos-11, 9);
-                    if (double.TryParse(s, out d))
+                    if (double.TryParse(linesp[0], out d))
                     {
                         levdata.Wavelength = d;
                     }
+                    else
+                    {
+                        continue;
+                    }
                     // Aki
-                    s = line.Substring(base_pos+10, 10);
-                    if (double.TryParse(s, out d))
+                    if (double.TryParse(linesp[2], out d))
                     {
                         levdata.Aki = d;
                     }
                     // Ei
-                    s = line.Substring(base_pos+31, 10);
-                    if (double.TryParse(s, out d))
+                    string[] linesp2 = linesp[4].Split('-');
+                    if (double.TryParse(linesp2[0], out d))
                     {
                         levdata.Ei = d;
                     }
                     // Ek
-                    s = line.Substring(base_pos+49, 10);
-                    if (double.TryParse(s, out d))
+                    s = linesp2[1];
+                    s1 = s.Replace("[", " ").Replace("]", " ");
+                    if (double.TryParse(s1, out d))
                     {
                         levdata.Ek = d;
                     }
                     // gi
-                    s = line.Substring(base_pos+91, 2); //111
-                    if (double.TryParse(s, out d))
+                    linesp2 = linesp[7].Split('-');
+                    if (double.TryParse(linesp2[0], out d))
                     {
                         levdata.gi = d;
                     }
                     // gk
-                    s = line.Substring(base_pos+ 97, 2);//117
-                    if (double.TryParse(s, out d))
+                    if (double.TryParse(linesp2[1], out d))
                     {
                         levdata.gk = d;
                     }
                     atomdata[atomic_num].add(levdata);
-                    w.WriteLine(atomdata[atomic_num].leveldata.Last.Print() );
+                    w.WriteLine( atomdata[atomic_num].leveldata.Last().Print() ) ;
                 }
                 foreach (Level_Data ld in atomdata[atomic_num].leveldata)
                 {
-                    w.WriteLine(ld.Print());   //richTextBox1.AppendText(line);
+                    //w.WriteLine(ld.Print());   //richTextBox1.AppendText(line);
                 }
                 richTextBox1.AppendText(atomic_num.ToString() + ": " + atomdata[atomic_num].leveldata[0].Print() + "\n");
             }
