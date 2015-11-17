@@ -50,7 +50,7 @@ namespace LineSynth
             index = checkedListBox1.FindString("Mg");
             atomdata[12].Enabled = checkedListBox1.GetItemChecked(index);
 
-            Cal_Line(12, 1000, (double)numericUpDownTemp.Value);
+            Cal_Line(12, (int)numericUpDownNumber.Value, (double)numericUpDownTemp.Value);
             PlotSinCos();
         }
     }
