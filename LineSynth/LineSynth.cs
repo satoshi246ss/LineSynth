@@ -25,17 +25,29 @@ namespace LineSynth
             return "wl:" + Wavelength.ToString() + " Aki:" + Aki.ToString() + " Ei:" + Ei.ToString() + " Ek:" + Ek.ToString() + " gi:" + gi.ToString() + " gk:" + gk.ToString();
         }
     }
+    class Line_Data
+    {
+        public double Wavelength;    // Observed Wavelength  Air (nm)
+        public double photon_number; // 光子数
+
+        public String Print()
+        {
+            return "wl:" + Wavelength.ToString() + " photon:" + photon_number.ToString() ;
+        }
+    }
 
     class Atom_Data
     {
         public bool Enabled { get; set; }    // true:有効
-        public double number { get; set; }   // 相対原子数
+        public double number { get; set; }   // 原子数
+        public double temperature { get; set; }   // 温度[K]
         public double e0 { get; set; }       // E0
         public int g0 { get; set; }          // g0
         public int atomic_number { get; set; }// 原子番号
         public int state { get; set; }       // 0:中性 1:１価　2:２価 ・・・
         public string name { get; set; }     // 名称 "NaI"等
         public List<Level_Data> leveldata = new List<Level_Data>();
+        public List<Line_Data> linedata = new List<Line_Data>();
 
         public Atom_Data()
         {
@@ -47,14 +59,46 @@ namespace LineSynth
         {
             leveldata.Add(d);
         }
+        public void add(Line_Data d)
+        {
+            linedata.Add(d);
+        }
+
+        // Line数 
+        public int Count()
+        {
+            return leveldata.Count();
+        }
+
+        public void cal_photon()
+        {
+            if (Enabled)
+            {
+                double k  = 1.38064852e-23; //m2 kg s-2 K-1  // J/K
+                double ev = 1.60218e-19; // 1eV = 1.6e-19 J
+                for( int i=0 ; i< leveldata.Count(); i++)
+                {
+                    Level_Data ld = leveldata[i];
+                    double e1 = -(ld.Ek - e0)*ev / (k * temperature);
+                    double nn = number * (ld.gk / g0) * Math.Exp(e1);
+                    linedata[i].photon_number = nn * ld.Aki;
+                }
+            }
+        }
     }
 
     public partial class Form1 : Form
     {
         Atom_Data[] atomdata = new Atom_Data[100];
-        Level_Data levdata = new Level_Data();
+        Level_Data levdata1 = new Level_Data();
         List<PointF> obs_data = new List<PointF>();
+        List<PointF> sim_data = new List<PointF>();
+        double[] sim_base_data = new double[12000];
+
         PointF pf;
+        double temperature ;
+        double electron_density ;
+        double k = 1.38064852e-23; //m2 kg s-2 K-1
 
         private void ReadData()
         {
@@ -73,6 +117,24 @@ namespace LineSynth
                     richTextBox1.AppendText(stArrayData[0] + stArrayData[1] +"\n");
                 }
             }
+        }
+        private void Cal_Line(int atom_num, int num, double temp)
+        {
+            atomdata[atom_num].temperature = temp;
+            atomdata[atom_num].number = num ;
+            atomdata[atom_num].cal_photon();
+
+            for (int i = 0; i < atomdata[atom_num].linedata.Count(); i++)
+            {
+                int wli = (int)(10 * atomdata[atom_num].linedata[i].Wavelength);
+                sim_base_data[wli] = atomdata[atom_num].linedata[i].photon_number;
+            }
+        }
+
+        private void Cal_All_Line(double temp)
+        {
+            //atomdata[atom_num].temperature = temp;
+            //atomdata[atom_num].cal_photone();
         }
 
         // ファイルからテキストを読み出し。
@@ -118,11 +180,15 @@ namespace LineSynth
                 }
                 while ((line = r.ReadLine()) != null) // 1行ずつ読み出し。
                 {
+                    Level_Data levdata = new Level_Data();
+                    Line_Data lid = new Line_Data();
                     string[] linesp = line.Split('|');
                     // wavelenth
                     if (double.TryParse(linesp[0], out d))
                     {
                         levdata.Wavelength = d;
+                        lid.Wavelength = d;
+                        lid.photon_number = 0;
                     }
                     else
                     {
@@ -158,6 +224,7 @@ namespace LineSynth
                         levdata.gk = d;
                     }
                     atomdata[atomic_num].add(levdata);
+                    atomdata[atomic_num].add(lid);
                     w.WriteLine( atomdata[atomic_num].leveldata.Last().Print() ) ;
                 }
                 foreach (Level_Data ld in atomdata[atomic_num].leveldata)
@@ -173,22 +240,27 @@ namespace LineSynth
             // 1.Seriesの追加
             chart1.Series.Clear();
             chart1.Series.Add("sin");
-            chart1.Series.Add("cos");
+            chart1.Series.Add("sim");
 
             // 2.グラフのタイプの設定
             chart1.Series["sin"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            chart1.Series["cos"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            chart1.Series["sim"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 
             // 3.座標の入力
             for (double theta = 0.0; theta <= 2 * Math.PI; theta += Math.PI / 360)
             {
                 //chart1.Series["sin"].Points.AddXY(theta, Math.Sin(theta));
-                chart1.Series["cos"].Points.AddXY(theta, Math.Cos(theta));
+                chart1.Series["sim"].Points.AddXY(theta, Math.Cos(theta));
             }
 
             for (int i = 0; i < obs_data.Count; i++)
             {
                 chart1.Series["sin"].Points.AddXY(obs_data[i].X, obs_data[i].Y);
+            }
+
+            for (int i = 3000; i < 12000 ; i++)
+            {
+                chart1.Series["sim"].Points.AddXY(i/10.0, sim_base_data[i]);
             }
 
             //軸ラベルの設定

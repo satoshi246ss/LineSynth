@@ -28,6 +28,7 @@ namespace LineSynth
 
         private void button1_Click(object sender, EventArgs e)
         {
+            temperature = (double)numericUpDownTemp.Value;
             ReadData();
 
             ReadAtomData("atom\\C_I.txt");
@@ -39,6 +40,17 @@ namespace LineSynth
             ReadAtomData("atom\\Ca_I.txt");
             ReadAtomData("atom\\Fe_I.txt");
 
+            PlotSinCos();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int index = checkedListBox1.FindString("Na");
+            atomdata[11].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Mg");
+            atomdata[12].Enabled = checkedListBox1.GetItemChecked(index);
+
+            Cal_Line(12, 1000, (double)numericUpDownTemp.Value);
             PlotSinCos();
         }
     }
