@@ -30,27 +30,16 @@ namespace LineSynth
         {
             temperature = (double)numericUpDownTemp.Value;
             ReadData();
-
-            ReadAtomData("atom\\C_I.txt");
-            ReadAtomData("atom\\N_I.txt");
-            ReadAtomData("atom\\O_I.txt");
-            ReadAtomData("atom\\Na_I.txt");
-            ReadAtomData("atom\\Mg_I.txt");
-            ReadAtomData("atom\\K_I.txt ");
-            ReadAtomData("atom\\Ca_I.txt");
-            ReadAtomData("atom\\Fe_I.txt");
-
+            ReadAtomDataAll();
+    
             PlotSinCos();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int index = checkedListBox1.FindString("Na");
-            atomdata[11].Enabled = checkedListBox1.GetItemChecked(index);
-            index = checkedListBox1.FindString("Mg");
-            atomdata[12].Enabled = checkedListBox1.GetItemChecked(index);
+            checkedList();
 
-            Cal_Line(12, (int)numericUpDownNumber.Value, (double)numericUpDownTemp.Value);
+            Cal_Line(26, (int)numericUpDownNumber.Value, (double)numericUpDownTemp.Value);
             PlotSinCos();
         }
     }

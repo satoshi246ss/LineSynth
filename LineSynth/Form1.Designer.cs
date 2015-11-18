@@ -40,9 +40,41 @@
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.numericUpDownNumber = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.numericUpDown_C = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_N = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_O = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Na = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Mg = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Al = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Si = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_K = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Ca = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Ti = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Cr = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Mn = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Fe = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Co = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Ni = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumber)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_C)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_N)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_O)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Na)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Mg)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Al)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Si)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_K)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Ca)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Ti)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Cr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Mn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Fe)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Co)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Ni)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
@@ -128,6 +160,7 @@
             // 
             // checkedListBox1
             // 
+            this.checkedListBox1.Font = new System.Drawing.Font("MS UI Gothic", 14F);
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
             "C",
@@ -135,12 +168,19 @@
             "O",
             "Na",
             "Mg",
+            "Al",
+            "Si",
             "K",
             "Ca",
-            "Fe"});
-            this.checkedListBox1.Location = new System.Drawing.Point(1242, 459);
+            "Ti",
+            "Cr",
+            "Mn",
+            "Fe",
+            "Co",
+            "Ni"});
+            this.checkedListBox1.Location = new System.Drawing.Point(3, 3);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(120, 158);
+            this.checkedListBox1.Size = new System.Drawing.Size(75, 344);
             this.checkedListBox1.TabIndex = 6;
             // 
             // numericUpDownNumber
@@ -178,14 +218,232 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "量";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.numericUpDown_Ni);
+            this.panel1.Controls.Add(this.numericUpDown_Co);
+            this.panel1.Controls.Add(this.numericUpDown_Fe);
+            this.panel1.Controls.Add(this.numericUpDown_Mn);
+            this.panel1.Controls.Add(this.numericUpDown_Cr);
+            this.panel1.Controls.Add(this.numericUpDown_Ti);
+            this.panel1.Controls.Add(this.numericUpDown_Ca);
+            this.panel1.Controls.Add(this.numericUpDown_K);
+            this.panel1.Controls.Add(this.numericUpDown_Si);
+            this.panel1.Controls.Add(this.numericUpDown_Al);
+            this.panel1.Controls.Add(this.numericUpDown_Mg);
+            this.panel1.Controls.Add(this.numericUpDown_Na);
+            this.panel1.Controls.Add(this.numericUpDown_O);
+            this.panel1.Controls.Add(this.numericUpDown_N);
+            this.panel1.Controls.Add(this.numericUpDown_C);
+            this.panel1.Controls.Add(this.checkedListBox1);
+            this.panel1.Location = new System.Drawing.Point(1242, 24);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(174, 407);
+            this.panel1.TabIndex = 9;
+            // 
+            // numericUpDown_C
+            // 
+            this.numericUpDown_C.Location = new System.Drawing.Point(83, 7);
+            this.numericUpDown_C.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_C.Name = "numericUpDown_C";
+            this.numericUpDown_C.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_C.TabIndex = 7;
+            this.numericUpDown_C.ThousandsSeparator = true;
+            // 
+            // numericUpDown_N
+            // 
+            this.numericUpDown_N.Location = new System.Drawing.Point(83, 28);
+            this.numericUpDown_N.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_N.Name = "numericUpDown_N";
+            this.numericUpDown_N.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_N.TabIndex = 8;
+            this.numericUpDown_N.ThousandsSeparator = true;
+            // 
+            // numericUpDown_O
+            // 
+            this.numericUpDown_O.Location = new System.Drawing.Point(83, 49);
+            this.numericUpDown_O.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_O.Name = "numericUpDown_O";
+            this.numericUpDown_O.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_O.TabIndex = 9;
+            this.numericUpDown_O.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Na
+            // 
+            this.numericUpDown_Na.Location = new System.Drawing.Point(83, 70);
+            this.numericUpDown_Na.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Na.Name = "numericUpDown_Na";
+            this.numericUpDown_Na.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Na.TabIndex = 10;
+            this.numericUpDown_Na.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Mg
+            // 
+            this.numericUpDown_Mg.Location = new System.Drawing.Point(83, 91);
+            this.numericUpDown_Mg.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Mg.Name = "numericUpDown_Mg";
+            this.numericUpDown_Mg.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Mg.TabIndex = 11;
+            this.numericUpDown_Mg.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Al
+            // 
+            this.numericUpDown_Al.Location = new System.Drawing.Point(83, 112);
+            this.numericUpDown_Al.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Al.Name = "numericUpDown_Al";
+            this.numericUpDown_Al.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Al.TabIndex = 12;
+            this.numericUpDown_Al.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Si
+            // 
+            this.numericUpDown_Si.Location = new System.Drawing.Point(83, 133);
+            this.numericUpDown_Si.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Si.Name = "numericUpDown_Si";
+            this.numericUpDown_Si.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Si.TabIndex = 13;
+            this.numericUpDown_Si.ThousandsSeparator = true;
+            // 
+            // numericUpDown_K
+            // 
+            this.numericUpDown_K.Location = new System.Drawing.Point(83, 154);
+            this.numericUpDown_K.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_K.Name = "numericUpDown_K";
+            this.numericUpDown_K.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_K.TabIndex = 14;
+            this.numericUpDown_K.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Ca
+            // 
+            this.numericUpDown_Ca.Location = new System.Drawing.Point(83, 175);
+            this.numericUpDown_Ca.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Ca.Name = "numericUpDown_Ca";
+            this.numericUpDown_Ca.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Ca.TabIndex = 15;
+            this.numericUpDown_Ca.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Ti
+            // 
+            this.numericUpDown_Ti.Location = new System.Drawing.Point(83, 196);
+            this.numericUpDown_Ti.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Ti.Name = "numericUpDown_Ti";
+            this.numericUpDown_Ti.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Ti.TabIndex = 16;
+            this.numericUpDown_Ti.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Cr
+            // 
+            this.numericUpDown_Cr.Location = new System.Drawing.Point(83, 217);
+            this.numericUpDown_Cr.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Cr.Name = "numericUpDown_Cr";
+            this.numericUpDown_Cr.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Cr.TabIndex = 17;
+            this.numericUpDown_Cr.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Mn
+            // 
+            this.numericUpDown_Mn.Location = new System.Drawing.Point(83, 238);
+            this.numericUpDown_Mn.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Mn.Name = "numericUpDown_Mn";
+            this.numericUpDown_Mn.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Mn.TabIndex = 18;
+            this.numericUpDown_Mn.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Fe
+            // 
+            this.numericUpDown_Fe.Location = new System.Drawing.Point(83, 259);
+            this.numericUpDown_Fe.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Fe.Name = "numericUpDown_Fe";
+            this.numericUpDown_Fe.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Fe.TabIndex = 19;
+            this.numericUpDown_Fe.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Co
+            // 
+            this.numericUpDown_Co.Location = new System.Drawing.Point(83, 280);
+            this.numericUpDown_Co.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Co.Name = "numericUpDown_Co";
+            this.numericUpDown_Co.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Co.TabIndex = 20;
+            this.numericUpDown_Co.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Ni
+            // 
+            this.numericUpDown_Ni.Location = new System.Drawing.Point(83, 301);
+            this.numericUpDown_Ni.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Ni.Name = "numericUpDown_Ni";
+            this.numericUpDown_Ni.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Ni.TabIndex = 21;
+            this.numericUpDown_Ni.ThousandsSeparator = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1416, 772);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numericUpDownNumber);
-            this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numericUpDownTemp);
@@ -193,10 +451,26 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.chart1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "@";
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTemp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumber)).EndInit();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_C)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_N)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_O)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Na)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Mg)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Al)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Si)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_K)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Ca)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Ti)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Cr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Mn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Fe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Co)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Ni)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,6 +487,22 @@
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.NumericUpDown numericUpDownNumber;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Ni;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Co;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Fe;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Mn;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Cr;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Ti;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Ca;
+        private System.Windows.Forms.NumericUpDown numericUpDown_K;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Si;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Al;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Mg;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Na;
+        private System.Windows.Forms.NumericUpDown numericUpDown_O;
+        private System.Windows.Forms.NumericUpDown numericUpDown_N;
+        private System.Windows.Forms.NumericUpDown numericUpDown_C;
     }
 }
 

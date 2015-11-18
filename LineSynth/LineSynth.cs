@@ -235,6 +235,78 @@ namespace LineSynth
             }
         }
 
+        private void ReadAtomDataAll()
+        {
+            ReadAtomData("atom\\C_I.txt"); //6
+            ReadAtomData("atom\\N_I.txt"); //7
+            ReadAtomData("atom\\O_I.txt"); //8
+            ReadAtomData("atom\\Na_I.txt");//11
+            ReadAtomData("atom\\Mg_I.txt");//12
+            ReadAtomData("atom\\Al_I.txt");//13
+            ReadAtomData("atom\\Si_I.txt");//14
+
+            ReadAtomData("atom\\K_I.txt ");//19
+            ReadAtomData("atom\\Ca_I.txt");//20
+
+            ReadAtomData("atom\\Ti_I.txt");//22
+            ReadAtomData("atom\\Cr_I.txt");//24
+            ReadAtomData("atom\\Mn_I.txt");//25
+            ReadAtomData("atom\\Fe_I.txt");//26
+            ReadAtomData("atom\\Co_I.txt");//27
+            ReadAtomData("atom\\Ni_I.txt");//28
+
+            //太陽系存在比
+            numericUpDown_C.Value = (decimal)1.21e7;
+            numericUpDown_N.Value = (decimal)2.48e6;
+            numericUpDown_O.Value = (decimal)2.01e7;
+            numericUpDown_Na.Value = (decimal)5.70e4;
+            numericUpDown_Mg.Value = (decimal)1.075e6;
+            numericUpDown_Al.Value = (decimal)8.49e4;
+            numericUpDown_Si.Value = (decimal)1.00e6;
+            numericUpDown_K.Value = (decimal)3770;
+            numericUpDown_Ca.Value = (decimal)6.11e4;
+            numericUpDown_Ti.Value = (decimal)2400;
+            numericUpDown_Cr.Value = (decimal)1.34e4;
+            numericUpDown_Mn.Value = (decimal)9510;
+            numericUpDown_Fe.Value = (decimal)9.00e5;
+            numericUpDown_Co.Value = (decimal)2250;
+            numericUpDown_Ni.Value = (decimal)4.93e4;
+        }
+        private void checkedList()
+        {
+            int index ;
+            index = checkedListBox1.FindString("C");
+            atomdata[ 6].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("N");
+            atomdata[ 7].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("O");
+            atomdata[ 8].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Na");
+            atomdata[11].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Mg");
+            atomdata[12].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Al");
+            atomdata[13].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Si");
+            atomdata[14].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("K");
+            atomdata[19].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Ca");
+            atomdata[20].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Ti");
+            atomdata[23].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Cr");
+            atomdata[24].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Mn");
+            atomdata[25].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Fe");
+            atomdata[26].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Co");
+            atomdata[27].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Ni");
+            atomdata[28].Enabled = checkedListBox1.GetItemChecked(index);
+        }
+
         private void PlotSinCos()
         {
             // 1.Seriesの追加
