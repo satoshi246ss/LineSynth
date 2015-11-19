@@ -118,10 +118,10 @@ namespace LineSynth
                 }
             }
         }
-        private void Cal_Line(int atom_num, int num, double temp)
+        private void Cal_Line(int atom_num, double num, double temp)
         {
             atomdata[atom_num].temperature = temp;
-            atomdata[atom_num].number = num ;
+            atomdata[atom_num].number = num;
             atomdata[atom_num].cal_photon();
 
             for (int i = 0; i < atomdata[atom_num].linedata.Count(); i++)
@@ -130,11 +130,12 @@ namespace LineSynth
                 sim_base_data[wli] = atomdata[atom_num].linedata[i].photon_number;
             }
         }
-
-        private void Cal_All_Line(double temp)
+        private void Clear_Line()
         {
-            //atomdata[atom_num].temperature = temp;
-            //atomdata[atom_num].cal_photone();
+            for (int i = 0; i < 12000; i++)
+            {
+                sim_base_data[i] = 0 ;
+            }
         }
 
         // ファイルからテキストを読み出し。
@@ -306,6 +307,87 @@ namespace LineSynth
             index = checkedListBox1.FindString("Ni");
             atomdata[28].Enabled = checkedListBox1.GetItemChecked(index);
         }
+        private void cal_line_all()
+        {
+            double n = (double)numericUpDownNumber.Value;
+            double temp = (double)numericUpDownTemp.Value;
+            int index, elm;
+            index = checkedListBox1.FindString("C"); elm = 6;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_C.Value*n, temp);
+            }
+            index = checkedListBox1.FindString("N"); elm = 7;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_N.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("O"); elm = 8;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_O.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Na"); elm = 11;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Na.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Mg"); elm = 12;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Mg.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Al"); elm = 13;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Al.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Si"); elm = 14;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Si.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("K"); elm = 19;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_K.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Ca"); elm = 20;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Ca.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Ti"); elm = 23;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Ti.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Cr"); elm = 24;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Cr.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Mn"); elm = 25;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Mn.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Fe"); elm = 26;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Fe.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Co"); elm = 27;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Co.Value * n, temp);
+            }
+            index = checkedListBox1.FindString("Ni"); elm = 28;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Ni.Value * n, temp);
+            }
+        }
 
         private void PlotSinCos()
         {
@@ -335,6 +417,7 @@ namespace LineSynth
                 chart1.Series["sim"].Points.AddXY(i/10.0, sim_base_data[i]);
             }
 
+            chart1.Series["sim"].YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
             //軸ラベルの設定
             string s = chart1.Series["sin"].ChartArea;//
             chart1.ChartAreas[s].AxisX.Title = "WaveLenght(nm)";

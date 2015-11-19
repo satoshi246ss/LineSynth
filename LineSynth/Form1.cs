@@ -38,8 +38,9 @@ namespace LineSynth
         private void button2_Click(object sender, EventArgs e)
         {
             checkedList();
+            Clear_Line();
+            cal_line_all();
 
-            Cal_Line(26, (int)numericUpDownNumber.Value, (double)numericUpDownTemp.Value);
             PlotSinCos();
         }
     }
