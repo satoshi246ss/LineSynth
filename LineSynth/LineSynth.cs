@@ -36,6 +36,12 @@ namespace LineSynth
         }
     }
 
+    class EnergyLevel
+    {
+        public int gi { get; set; }
+        public double Ei { get; set; }       // (eV) Lower level
+    }
+
     class Atom_Data
     {
         public bool Enabled { get; set; }    // true:有効
@@ -48,6 +54,8 @@ namespace LineSynth
         public string name { get; set; }     // 名称 "NaI"等
         public List<Level_Data> leveldata = new List<Level_Data>();
         public List<Line_Data> linedata = new List<Line_Data>();
+        public List<EnergyLevel> energy_level_I = new List<EnergyLevel>();
+        public List<EnergyLevel> energy_level_II = new List<EnergyLevel>();
 
         public Atom_Data()
         {
@@ -62,6 +70,14 @@ namespace LineSynth
         public void add(Line_Data d)
         {
             linedata.Add(d);
+        }
+        public void add_I(EnergyLevel d)
+        {
+            energy_level_I.Add(d);
+        }
+        public void add_II(EnergyLevel d)
+        {
+            energy_level_II.Add(d);
         }
 
         // Line数 
@@ -227,6 +243,69 @@ namespace LineSynth
                     atomdata[atomic_num].add(levdata);
                     atomdata[atomic_num].add(lid);
                     w.WriteLine( atomdata[atomic_num].leveldata.Last().Print() ) ;
+                }
+                foreach (Level_Data ld in atomdata[atomic_num].leveldata)
+                {
+                    //w.WriteLine(ld.Print());   //richTextBox1.AppendText(line);
+                }
+                richTextBox1.AppendText(atomic_num.ToString() + ": " + atomdata[atomic_num].leveldata[0].Print() + "\n");
+            }
+        }
+
+        // ファイルからテキストを読み出し。
+        //          1         2         3         4         5         6         7         8         9         0         1         1         2 
+        //01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+        //-------------------------------------------------------------------------------
+        //Configuration          | Term   |   J |                   Level    | Reference
+        //-----------------------|--------|-----|----------------------------|-----------
+        //                       |        |     |                            |           
+        //2s2.2p4                | 3P     |   2 |              0.000000      |     L7288
+        //                       |        |   1 |              0.0196224     |          
+        //                       |        |   0 |              0.0281416     |          
+        //                       |        |     |                            |           
+        //2s2.2p4                | 1D     |   2 |              1.9673641     |          
+
+        private void ReadEnergyLevel(string fn, int atomic_num)
+        {
+
+            using (StreamReader r = new StreamReader(fn))   //@"O_lev.txt"
+            using (StreamWriter w = new StreamWriter(fn + ".txt"))   //@"O_lev.txt.txt"
+            {
+                double d;
+                string line = "", s, s1;
+                EnergyLevel el = new EnergyLevel();
+
+                string[] stArrayData = line.Split(' ');
+
+                // 先頭4行スキップ
+                for (int i = 0; i < 4; i++)
+                {
+                    line = r.ReadLine();
+                    //richTextBox1.AppendText(line);
+                }
+                while ((line = r.ReadLine()) != null) // 1行ずつ読み出し。
+                {
+                    Level_Data levdata = new Level_Data();
+                    Line_Data lid = new Line_Data();
+                    string[] linesp = line.Split('|');
+                    // energy level
+                    if (double.TryParse(linesp[3], out d))
+                    {
+                        el.Ei = d;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    // gi
+                    //linesp2 = linesp[2].Split('-');
+                    if (double.TryParse(linesp[2], out d))
+                    {
+                        el.gi = (int)(d*2+1);
+                    }                    
+                    atomdata[atomic_num].add_I(el);
+
+                    w.WriteLine(atomdata[atomic_num].leveldata.Last().Print());
                 }
                 foreach (Level_Data ld in atomdata[atomic_num].leveldata)
                 {
