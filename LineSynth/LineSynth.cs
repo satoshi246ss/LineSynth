@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace LineSynth
 {
@@ -305,7 +306,7 @@ namespace LineSynth
                     }                    
                     atomdata[atomic_num].add_I(el);
 
-                    w.WriteLine(atomdata[atomic_num].leveldata.Last().Print());
+                    //w.WriteLine(atomdata[atomic_num].leveldata.Last().Print());
                 }
                 foreach (Level_Data ld in atomdata[atomic_num].leveldata)
                 {
@@ -504,17 +505,41 @@ namespace LineSynth
             //※Axis.TitleFontでフォントも指定できるがこれはデザイナで変更したほうが楽
 
             //X軸最小値、最大値、目盛間隔の設定
-            chart1.ChartAreas[s].AxisX.Minimum = 300;
-            chart1.ChartAreas[s].AxisX.Maximum = 1200;
-            chart1.ChartAreas[s].AxisX.Interval = 50;
+            chart1.ChartAreas[s].AxisX.Minimum = (double)numericUpDown_xaxis_min.Value ;
+            chart1.ChartAreas[s].AxisX.Maximum = (double)numericUpDown_xaxis_max.Value ;
+            chart1.ChartAreas[s].AxisX.Interval = (double)numericUpDown_xaxis_interval.Value;
 
             //Y軸最小値、最大値、目盛間隔の設定
             //chart1.ChartAreas["area1"].AxisY.Minimum = -1;
             //chart1.ChartAreas["area1"].AxisY.Maximum = 1;
             //chart1.ChartAreas["area1"].AxisY.Interval = 0.2;
 
+            //凡例に表示される文字列を指定
+            chart1.Series["sim"].Name = "Simulation";
+
+            //凡例の作成と位置情報の指定
+            Legend leg = new Legend();
+            leg.DockedToChartArea = "area1";
+            leg.Alignment = StringAlignment.Near;
         }
 
+        private void button_x05ymax_Click(object sender, EventArgs e)
+        {
+            string s = chart1.Series["sim"].ChartArea;//
+            double ymin = chart1.ChartAreas[s].AxisY2.Minimum;
+            double ymax = chart1.ChartAreas[s].AxisY2.Maximum;
+            chart1.ChartAreas[s].AxisY2.Minimum = ymin * 0.5;
+            chart1.ChartAreas[s].AxisY2.Maximum = ymax * 0.5;
+        }
+        // 動作不良
+        private void button_x2ymax_Click(object sender, EventArgs e)
+        {
+            string s = chart1.Series["sim"].ChartArea;//
+            double ymin = chart1.ChartAreas[s].AxisY2.Minimum;
+            double ymax = chart1.ChartAreas[s].AxisY2.Maximum;
+            chart1.ChartAreas[s].AxisY2.Minimum = ymin * 2;
+            chart1.ChartAreas[s].AxisY2.Maximum = ymax * 2;        
+        }
 
     }
 }

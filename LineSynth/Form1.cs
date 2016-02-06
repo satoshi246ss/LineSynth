@@ -43,5 +43,17 @@ namespace LineSynth
 
             PlotSinCos();
         }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+
     }
 }

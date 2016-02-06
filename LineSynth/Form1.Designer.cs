@@ -56,6 +56,14 @@
             this.numericUpDown_O = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_N = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_C = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_xaxis_max = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_xaxis_min = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numericUpDown_xaxis_interval = new System.Windows.Forms.NumericUpDown();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.button_x2ymax = new System.Windows.Forms.Button();
+            this.button_x05ymax = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumber)).BeginInit();
@@ -75,6 +83,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_O)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_N)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_C)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_xaxis_max)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_xaxis_min)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_xaxis_interval)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // chart1
@@ -436,11 +448,150 @@
             this.numericUpDown_C.TabIndex = 7;
             this.numericUpDown_C.ThousandsSeparator = true;
             // 
+            // numericUpDown_xaxis_max
+            // 
+            this.numericUpDown_xaxis_max.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.numericUpDown_xaxis_max.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_max.Location = new System.Drawing.Point(70, 3);
+            this.numericUpDown_xaxis_max.Maximum = new decimal(new int[] {
+            1200,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_max.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_max.Name = "numericUpDown_xaxis_max";
+            this.numericUpDown_xaxis_max.Size = new System.Drawing.Size(52, 23);
+            this.numericUpDown_xaxis_max.TabIndex = 10;
+            this.numericUpDown_xaxis_max.Value = new decimal(new int[] {
+            1200,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDown_xaxis_min
+            // 
+            this.numericUpDown_xaxis_min.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.numericUpDown_xaxis_min.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_min.Location = new System.Drawing.Point(14, 3);
+            this.numericUpDown_xaxis_min.Maximum = new decimal(new int[] {
+            1200,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_min.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_min.Name = "numericUpDown_xaxis_min";
+            this.numericUpDown_xaxis_min.Size = new System.Drawing.Size(52, 23);
+            this.numericUpDown_xaxis_min.TabIndex = 11;
+            this.numericUpDown_xaxis_min.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_min.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(1, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(12, 12);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "X";
+            // 
+            // numericUpDown_xaxis_interval
+            // 
+            this.numericUpDown_xaxis_interval.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.numericUpDown_xaxis_interval.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_interval.Location = new System.Drawing.Point(126, 3);
+            this.numericUpDown_xaxis_interval.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_interval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown_xaxis_interval.Name = "numericUpDown_xaxis_interval";
+            this.numericUpDown_xaxis_interval.Size = new System.Drawing.Size(45, 23);
+            this.numericUpDown_xaxis_interval.TabIndex = 13;
+            this.numericUpDown_xaxis_interval.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.button_x2ymax);
+            this.panel2.Controls.Add(this.button_x05ymax);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.numericUpDown_xaxis_min);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.numericUpDown_xaxis_interval);
+            this.panel2.Controls.Add(this.numericUpDown_xaxis_max);
+            this.panel2.Location = new System.Drawing.Point(1242, 462);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(174, 100);
+            this.panel2.TabIndex = 14;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // button_x2ymax
+            // 
+            this.button_x2ymax.Location = new System.Drawing.Point(101, 40);
+            this.button_x2ymax.Name = "button_x2ymax";
+            this.button_x2ymax.Size = new System.Drawing.Size(70, 23);
+            this.button_x2ymax.TabIndex = 17;
+            this.button_x2ymax.Text = "2 Ymax";
+            this.button_x2ymax.UseVisualStyleBackColor = true;
+            this.button_x2ymax.Click += new System.EventHandler(this.button_x2ymax_Click);
+            // 
+            // button_x05ymax
+            // 
+            this.button_x05ymax.Location = new System.Drawing.Point(14, 40);
+            this.button_x05ymax.Name = "button_x05ymax";
+            this.button_x05ymax.Size = new System.Drawing.Size(64, 23);
+            this.button_x05ymax.TabIndex = 15;
+            this.button_x05ymax.Text = "1/2Ymax";
+            this.button_x05ymax.UseVisualStyleBackColor = true;
+            this.button_x05ymax.Click += new System.EventHandler(this.button_x05ymax_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(2, 45);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(11, 12);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "y";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1416, 772);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numericUpDownNumber);
@@ -471,6 +622,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_O)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_N)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_C)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_xaxis_max)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_xaxis_min)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_xaxis_interval)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -503,6 +659,14 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_O;
         private System.Windows.Forms.NumericUpDown numericUpDown_N;
         private System.Windows.Forms.NumericUpDown numericUpDown_C;
+        private System.Windows.Forms.NumericUpDown numericUpDown_xaxis_max;
+        private System.Windows.Forms.NumericUpDown numericUpDown_xaxis_min;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown numericUpDown_xaxis_interval;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button_x2ymax;
+        private System.Windows.Forms.Button button_x05ymax;
     }
 }
 
