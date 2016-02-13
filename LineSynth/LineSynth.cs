@@ -45,25 +45,38 @@ namespace LineSynth
 
     class Atom_Data
     {
-        public bool Enabled { get; set; }    // true:有効
-        public double number { get; set; }   // 原子数
-        public double temperature { get; set; }   // 温度[K]
+        const double k  = 1.38064852e-23; //ボルツマン定数[J/K]
+        const double ev = 1.60217733e-19; //電子ボルト[J]    1eV = 1.6e-19 J
+        const double h  = 6.62607004e-34; //プランク定数[Js] 4.135667662e-15;//[eVs]
+        const double me = 9.10938188e-31; //電子質量[kg]
+  
+        public bool   Enabled { get; set; }          // true:有効
+        public double number { get; set; }           // 原子数
+        public double temperature  { get; set; }     // 温度[K]
+        public double electron_dens{ get; set; }     // 電子密度[m-3]
+        public double ionization_energy { get; set; }// イオン化エネルギー[eV]
+        public double ni_na { get; set; }    // Ni/Na イオン、原子の比率
         public double e0 { get; set; }       // E0
         public int g0 { get; set; }          // g0
-        public int atomic_number { get; set; }// 原子番号
+        public double Z { get; set; }        // 分配関数 
+        public double Zii { get; set; }      // 1価分配関数 
+        public int atomic_number { get; set;}// 原子番号
         public int state { get; set; }       // 0:中性 1:１価　2:２価 ・・・
         public string name { get; set; }     // 名称 "NaI"等
         public List<Level_Data> leveldata = new List<Level_Data>();
         public List<Line_Data> linedata = new List<Line_Data>();
         public List<EnergyLevel> energy_level_I = new List<EnergyLevel>();
-        public List<EnergyLevel> energy_level_II = new List<EnergyLevel>();
+        // イオン用
+        public List<Level_Data > leveldata_2 = new List<Level_Data>();
+        public List<Line_Data  > linedata_2 = new List<Line_Data>();
+        public List<EnergyLevel> energy_level_2 = new List<EnergyLevel>();
 
         public Atom_Data()
         {
             e0 = 0.0;
             g0 = 1;
         }
-
+        // 中性
         public void add(Level_Data d)
         {
             leveldata.Add(d);
@@ -76,9 +89,18 @@ namespace LineSynth
         {
             energy_level_I.Add(d);
         }
-        public void add_II(EnergyLevel d)
+        // １価イオン
+        public void add_2(Level_Data d)
         {
-            energy_level_II.Add(d);
+            leveldata_2.Add(d);
+        }
+        public void add_2(Line_Data d)
+        {
+            linedata_2.Add(d);
+        }
+        public void add_2(EnergyLevel d)
+        {
+            energy_level_2.Add(d);
         }
 
         // Line数 
@@ -87,17 +109,48 @@ namespace LineSynth
             return leveldata.Count();
         }
 
+        // 分配関数の計算
+        public double cal_PartionFunction()
+        {
+            Z = 0;
+            for (int i = 0; i < leveldata.Count(); i++)
+            {
+                Level_Data ld = leveldata[i];
+                double e1 = -(ld.Ek * ev) / (k * temperature);
+                Z += ld.gk * Math.Exp(e1);
+            }
+            Zii = 0;
+            for (int i = 0; i < leveldata_2.Count(); i++)
+            {
+                Level_Data ld = leveldata_2[i];
+                double e1 = -(ld.Ek * ev) / (k * temperature);
+                Zii += ld.gk * Math.Exp(e1);
+            }
+            return Z;
+        }
+ 
+        // イオン化率の計算
+        public double cal_ionizationRate()
+        {
+            ni_na = 0;
+            if (Zii > 0)
+            {
+                double a = Math.Pow(2 * Math.PI * me * k * temperature / (h * h), 1.5);
+                double b = Math.Exp(-ionization_energy * ev / (k * temperature));
+                ni_na = 2 * Math.Pow(2 * Math.PI * me * k * temperature/(h * h), 1.5)  * (Zii / Z) * Math.Exp(-ionization_energy * ev / (k * temperature)) / electron_dens;
+            }
+            return ni_na;
+        }
+
         public void cal_photon()
         {
             if (Enabled)
             {
-                double k  = 1.38064852e-23; //m2 kg s-2 K-1  // J/K
-                double ev = 1.60218e-19; // 1eV = 1.6e-19 J
                 for( int i=0 ; i< leveldata.Count(); i++)
                 {
                     Level_Data ld = leveldata[i];
                     double e1 = -(ld.Ek - e0)*ev / (k * temperature);
-                    double nn = number * (ld.gk / g0) * Math.Exp(e1);
+                    double nn = number * (ld.gk / Z) * Math.Exp(e1);
                     linedata[i].photon_number = nn * ld.Aki;
                 }
             }
@@ -106,11 +159,13 @@ namespace LineSynth
 
     public partial class Form1 : Form
     {
+        const int Sim_max_bin = 12000;
+        const int Sim_wl_step = 100; //  1 unit = 0.001nm
         Atom_Data[] atomdata = new Atom_Data[100];
         Level_Data levdata1 = new Level_Data();
         List<PointF> obs_data = new List<PointF>();
         List<PointF> sim_data = new List<PointF>();
-        double[] sim_base_data = new double[12000];
+        double[] sim_base_data = new double[Sim_max_bin];
 
         PointF pf;
         double temperature ;
@@ -135,21 +190,30 @@ namespace LineSynth
                 }
             }
         }
-        private void Cal_Line(int atom_num, double num, double temp)
+        private void Cal_Line(int atom_num, double num, double temp, double dens_e=-1.0)
         {
             atomdata[atom_num].temperature = temp;
             atomdata[atom_num].number = num;
+            atomdata[atom_num].electron_dens = dens_e;
+            atomdata[atom_num].cal_PartionFunction();//cal Z,Zii
+            atomdata[atom_num].cal_ionizationRate();
+            label_ionizationRate.Text = (1.0/(1+(1/atomdata[atom_num].ni_na))).ToString();
             atomdata[atom_num].cal_photon();
 
             for (int i = 0; i < atomdata[atom_num].linedata.Count(); i++)
             {
-                int wli = (int)(10 * atomdata[atom_num].linedata[i].Wavelength);
-                sim_base_data[wli] = atomdata[atom_num].linedata[i].photon_number;
+                int wli = (int)((1000 / Sim_wl_step) * atomdata[atom_num].linedata[i].Wavelength);
+                if (wli < Sim_max_bin)
+                {
+                    sim_base_data[wli] = atomdata[atom_num].linedata[i].photon_number;
+                }
             }
         }
+
+        // ビンをクリア
         private void Clear_Line()
         {
-            for (int i = 0; i < 12000; i++)
+            for (int i = 0; i < Sim_max_bin; i++)
             {
                 sim_base_data[i] = 0 ;
             }
@@ -169,7 +233,6 @@ namespace LineSynth
 
         private void ReadAtomData(string fn)
         {
-
             using (StreamReader r = new StreamReader(fn))   //@"OI.txt"
             using (StreamWriter w = new StreamWriter(fn+".txt"))   //@"OI.txt"
             {
@@ -241,9 +304,20 @@ namespace LineSynth
                     {
                         levdata.gk = d;
                     }
-                    atomdata[atomic_num].add(levdata);
-                    atomdata[atomic_num].add(lid);
-                    w.WriteLine( atomdata[atomic_num].leveldata.Last().Print() ) ;
+
+                    if (state == 0)
+                    {
+                        atomdata[atomic_num].add(levdata);
+                        atomdata[atomic_num].add(lid);
+                        w.WriteLine(atomdata[atomic_num].leveldata.Last().Print());
+                    }
+                    else if (state == 1)
+                    {
+                        atomdata[atomic_num].ionization_energy = double.Parse(stArrayData[0]);
+                        atomdata[atomic_num].add_2(levdata);
+                        atomdata[atomic_num].add_2(lid);
+                        w.WriteLine(atomdata[atomic_num].leveldata_2.Last().Print());
+                    }
                 }
                 foreach (Level_Data ld in atomdata[atomic_num].leveldata)
                 {
@@ -318,33 +392,47 @@ namespace LineSynth
 
         private void ReadAtomDataAll()
         {
-            ReadAtomData("atom\\C_I.txt"); //6
-            ReadAtomData("atom\\N_I.txt"); //7
-            ReadAtomData("atom\\O_I.txt"); //8
-            ReadAtomData("atom\\Na_I.txt");//11
-            ReadAtomData("atom\\Mg_I.txt");//12
-            ReadAtomData("atom\\Al_I.txt");//13
-            ReadAtomData("atom\\Si_I.txt");//14
+            ReadAtomData("atom\\H_I.txt");  // 1
+            ReadAtomData("atom\\Li_I.txt"); // 3
+            ReadAtomData("atom\\C_I.txt");  // 6
+            ReadAtomData("atom\\C_II.txt"); // 6
+            ReadAtomData("atom\\N_I.txt");  // 7
+            ReadAtomData("atom\\N_II.txt"); // 7
+            ReadAtomData("atom\\O_I.txt");  // 8
+            ReadAtomData("atom\\O_II.txt"); // 8
 
-            ReadAtomData("atom\\K_I.txt ");//19
-            ReadAtomData("atom\\Ca_I.txt");//20
+            ReadAtomData("atom\\Na_I.txt"); //11
+            ReadAtomData("atom\\Mg_I.txt"); //12
+            ReadAtomData("atom\\Mg_II.txt");//12
+            ReadAtomData("atom\\Al_I.txt"); //13
+            ReadAtomData("atom\\Al_II.txt");//13
+            ReadAtomData("atom\\Si_I.txt"); //14
+            ReadAtomData("atom\\Si_II.txt");//14
 
-            ReadAtomData("atom\\Ti_I.txt");//22
-            ReadAtomData("atom\\Cr_I.txt");//24
-            ReadAtomData("atom\\Mn_I.txt");//25
-            ReadAtomData("atom\\Fe_I.txt");//26
-            ReadAtomData("atom\\Co_I.txt");//27
-            ReadAtomData("atom\\Ni_I.txt");//28
+            ReadAtomData("atom\\K_I.txt "); //19
+            ReadAtomData("atom\\Ca_I.txt"); //20
+            ReadAtomData("atom\\Ca_II.txt");//20
 
-            //太陽系存在比
-            numericUpDown_C.Value = (decimal)1.21e7;
-            numericUpDown_N.Value = (decimal)2.48e6;
-            numericUpDown_O.Value = (decimal)2.01e7;
+            ReadAtomData("atom\\Ti_I.txt"); //22
+            ReadAtomData("atom\\Ti_II.txt");//22
+            ReadAtomData("atom\\Cr_I.txt"); //24
+            ReadAtomData("atom\\Cr_II.txt");//24
+            ReadAtomData("atom\\Mn_I.txt"); //25
+            ReadAtomData("atom\\Fe_I.txt"); //26
+            ReadAtomData("atom\\Fe_II.txt");//26
+            ReadAtomData("atom\\Co_I.txt"); //27
+            ReadAtomData("atom\\Co_II.txt");//27
+            ReadAtomData("atom\\Ni_I.txt"); //28
+
+            //太陽系存在比 Anders & Ebihara(1982)
+            numericUpDown_C.Value  = (decimal)1.21e7;
+            numericUpDown_N.Value  = (decimal)2.48e6;
+            numericUpDown_O.Value  = (decimal)2.01e7;
             numericUpDown_Na.Value = (decimal)5.70e4;
             numericUpDown_Mg.Value = (decimal)1.075e6;
             numericUpDown_Al.Value = (decimal)8.49e4;
             numericUpDown_Si.Value = (decimal)1.00e6;
-            numericUpDown_K.Value = (decimal)3770;
+            numericUpDown_K.Value  = (decimal)3770;
             numericUpDown_Ca.Value = (decimal)6.11e4;
             numericUpDown_Ti.Value = (decimal)2400;
             numericUpDown_Cr.Value = (decimal)1.34e4;
@@ -391,21 +479,22 @@ namespace LineSynth
         {
             double n = (double)numericUpDownNumber.Value;
             double temp = (double)numericUpDownTemp.Value;
+            double dens_e = (double)numericUpDown_DensE.Value * Math.Pow(10, (double)numericUpDown_DensE_exp.Value);
             int index, elm;
             index = checkedListBox1.FindString("C"); elm = 6;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_C.Value*n, temp);
+                Cal_Line(elm, (double)numericUpDown_C.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("N"); elm = 7;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_N.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_N.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("O"); elm = 8;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_O.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_O.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("Na"); elm = 11;
             if (atomdata[elm].Enabled)
@@ -415,17 +504,17 @@ namespace LineSynth
             index = checkedListBox1.FindString("Mg"); elm = 12;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_Mg.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_Mg.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("Al"); elm = 13;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_Al.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_Al.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("Si"); elm = 14;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_Si.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_Si.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("K"); elm = 19;
             if (atomdata[elm].Enabled)
@@ -435,32 +524,32 @@ namespace LineSynth
             index = checkedListBox1.FindString("Ca"); elm = 20;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_Ca.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_Ca.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("Ti"); elm = 23;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_Ti.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_Ti.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("Cr"); elm = 24;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_Cr.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_Cr.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("Mn"); elm = 25;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_Mn.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_Mn.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("Fe"); elm = 26;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_Fe.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_Fe.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("Co"); elm = 27;
             if (atomdata[elm].Enabled)
             {
-                Cal_Line(elm, (double)numericUpDown_Co.Value * n, temp);
+                Cal_Line(elm, (double)numericUpDown_Co.Value * n, temp, dens_e);
             }
             index = checkedListBox1.FindString("Ni"); elm = 28;
             if (atomdata[elm].Enabled)

@@ -28,7 +28,8 @@ namespace LineSynth
 
         private void button1_Click(object sender, EventArgs e)
         {
-            temperature = (double)numericUpDownTemp.Value;
+            temperature      = (double)numericUpDownTemp.Value;
+            electron_density = (double)numericUpDown_DensE.Value * Math.Pow(10,(double)numericUpDown_DensE_exp.Value);
             ReadData();
             ReadAtomDataAll();
     
@@ -37,6 +38,8 @@ namespace LineSynth
 
         private void button2_Click(object sender, EventArgs e)
         {
+            temperature = (double)numericUpDownTemp.Value;
+            electron_density = (double)numericUpDown_DensE.Value * Math.Pow(10, (double)numericUpDown_DensE_exp.Value);
             checkedList();
             Clear_Line();
             cal_line_all();
@@ -53,7 +56,5 @@ namespace LineSynth
         {
 
         }
-
-
     }
 }
