@@ -62,7 +62,7 @@ namespace LineSynth
         public double ni_na { get; set; }    // Ni/Na イオン、原子の比率
         public double e0 { get; set; }       // E0
         public int g0 { get; set; }          // g0
-        public double Z { get; set; }        // 分配関数 
+        public double Zi { get; set; }       // 分配関数 
         public double Zii { get; set; }      // 1価分配関数 
         public int atomic_number { get; set;}// 原子番号
         public int state { get; set; }       // 0:中性 1:１価　2:２価 ・・・
@@ -78,6 +78,10 @@ namespace LineSynth
         public double ionization_rate()
         {
             return (1.0 / (1 + (1 / ni_na)));
+        }
+        public double atom_rate()
+        {
+            return (1.0 - ionization_rate());
         }
 
         public Atom_Data()
@@ -122,11 +126,11 @@ namespace LineSynth
         // 1[eV] = 1.16045x10^4[K]
         public double cal_PartionFunction()
         {
-            Z = 0;
+            Zi = 0;
             foreach (EnergyLevel ld in energy_level_1)
             {
                 double e1 = -(ld.Ei * ev) / (k * temperature);
-                Z += ld.gi * Math.Exp(e1);
+                Zi += ld.gi * Math.Exp(e1);
             }
             Zii = 0;
             foreach (EnergyLevel ld in energy_level_2)
@@ -134,7 +138,7 @@ namespace LineSynth
                 double e1 = -(ld.Ei * ev) / (k * temperature);
                 Zii += ld.gi * Math.Exp(e1);
             }
-            return Z;
+            return Zi;
         }
  
         // イオン化率の計算
@@ -146,7 +150,7 @@ namespace LineSynth
                 //double saha = 
                 double a = Math.Pow(2 * Math.PI * me * k * temperature / (h * h), 1.5);
                 double b = Math.Exp(-ionization_energy * ev / (k * temperature));
-                ni_na = 2 * Math.Pow(2 * Math.PI * me * k * temperature/(h * h), 1.5)  * (Zii / Z) * Math.Exp(-ionization_energy * ev / (k * temperature)) / electron_dens;
+                ni_na = 2 * Math.Pow(2 * Math.PI * me * k * temperature/(h * h), 1.5)  * (Zii / Zi) * Math.Exp(-ionization_energy * ev / (k * temperature)) / electron_dens;
             }
             return ni_na;
         }
@@ -155,12 +159,21 @@ namespace LineSynth
         {
             if (Enabled)
             {
+                // 中性
                 for( int i=0 ; i< leveldata.Count(); i++)
                 {
                     Level_Data ld = leveldata[i];
-                    double e1 = -(ld.Ek - e0)*ev / (k * temperature);
-                    double nn = number * (ld.gk / Z) * Math.Exp(e1);
+                    double e1 = -(ld.Ek - 0.0)*ev / (k * temperature);
+                    double nn = number * (ld.gk / Zi) * Math.Exp(e1);
                     linedata[i].photon_number = nn * ld.Aki;
+                }
+                // 1価イオン
+                for(int i = 0; i < leveldata_2.Count(); i++)
+                {
+                    Level_Data ld = leveldata_2[i];
+                    double e1 = -(ld.Ek - 0.0) * ev / (k * temperature);
+                    double nn = number * (ld.gk / Zii) * Math.Exp(e1);
+                    linedata_2[i].photon_number = nn * ld.Aki;
                 }
             }
         }
@@ -208,13 +221,22 @@ namespace LineSynth
             atomdata[atom_num].cal_ionizationRate();
             label_ionizationRate.Text = (atomdata[atom_num].ionization_rate()).ToString();
             atomdata[atom_num].cal_photon();
-
+            // 中性
             for (int i = 0; i < atomdata[atom_num].linedata.Count(); i++)
             {
                 int wli = (int)((1000 / Sim_wl_step) * atomdata[atom_num].linedata[i].Wavelength);
                 if (wli < Sim_max_bin)
                 {
-                    sim_base_data[wli] = atomdata[atom_num].linedata[i].photon_number;
+                    sim_base_data[wli] += atomdata[atom_num].linedata[i].photon_number * atomdata[atom_num].atom_rate() ;
+                }
+            }
+            // 1価イオン
+            for (int i = 0; i < atomdata[atom_num].linedata_2.Count(); i++)
+            {
+                int wli = (int)((1000 / Sim_wl_step) * atomdata[atom_num].linedata_2[i].Wavelength);
+                if (wli < Sim_max_bin)
+                {
+                    sim_base_data[wli] += atomdata[atom_num].linedata_2[i].photon_number * atomdata[atom_num].ionization_rate() ;
                 }
             }
         }
@@ -429,7 +451,11 @@ namespace LineSynth
         private void ReadAtomDataAll()
         {
             ReadAtomData("atom\\H_I.txt");  // 1
-            ReadAtomData("atom\\Li_I.txt"); // 3
+            // 3 Li
+            ReadAtomData("atom\\Li_I.txt"); 
+            ReadAtomData("atom\\Li_II.txt");
+            ReadEnergyLevel("atom\\Li_I_Level.txt",  3, 0);
+            ReadEnergyLevel("atom\\Li_II_Level.txt", 3, 1);
             // 6 C
             ReadAtomData("atom\\C_I.txt");
             ReadAtomData("atom\\C_II.txt");
@@ -507,6 +533,8 @@ namespace LineSynth
             ReadEnergyLevel("atom\\Ni_II_Level.txt", 28, 1);//28
 
             //太陽系存在比 Anders & Ebihara(1982)
+            numericUpDown_H.Value  = (decimal)2.72e10;
+            numericUpDown_Li.Value = (decimal)59.7;
             numericUpDown_C.Value  = (decimal)1.21e7;
             numericUpDown_N.Value  = (decimal)2.48e6;
             numericUpDown_O.Value  = (decimal)2.01e7;
@@ -526,6 +554,10 @@ namespace LineSynth
         private void checkedList()
         {
             int index ;
+            index = checkedListBox1.FindString("H");
+            atomdata[ 1].Enabled = checkedListBox1.GetItemChecked(index);
+            index = checkedListBox1.FindString("Li");
+            atomdata[ 3].Enabled = checkedListBox1.GetItemChecked(index);
             index = checkedListBox1.FindString("C");
             atomdata[ 6].Enabled = checkedListBox1.GetItemChecked(index);
             index = checkedListBox1.FindString("N");
@@ -559,10 +591,23 @@ namespace LineSynth
         }
         private void cal_line_all()
         {
+            Clear_Line();
             double n = (double)numericUpDownNumber.Value;
             double temp = (double)numericUpDownTemp.Value;
             double dens_e = (double)numericUpDown_DensE.Value * Math.Pow(10, (double)numericUpDown_DensE_exp.Value);
             int index, elm;
+            index = checkedListBox1.FindString("H"); elm = 1;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_H.Value * n, temp, dens_e);
+                label_H_ion_rate.Text = (atomdata[elm].ionization_rate()).ToString("0.000");
+            }
+            index = checkedListBox1.FindString("Li"); elm = 3;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_Li.Value * n, temp, dens_e);
+                label_Li_ion_rate.Text = (atomdata[elm].ionization_rate()).ToString("0.000");
+            }
             index = checkedListBox1.FindString("C"); elm = 6;
             if (atomdata[elm].Enabled)
             {

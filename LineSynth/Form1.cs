@@ -41,7 +41,6 @@ namespace LineSynth
             temperature = (double)numericUpDownTemp.Value;
             electron_density = (double)numericUpDown_DensE.Value * Math.Pow(10, (double)numericUpDown_DensE_exp.Value);
             checkedList();
-            Clear_Line();
             cal_line_all();
 
             PlotSinCos();
@@ -55,6 +54,11 @@ namespace LineSynth
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            button2_Click(sender, e);
         }
     }
 }

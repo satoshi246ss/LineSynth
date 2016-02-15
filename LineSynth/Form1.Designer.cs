@@ -41,6 +41,28 @@
             this.numericUpDownNumber = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label_H_ion_rate = new System.Windows.Forms.Label();
+            this.label_Li_ion_rate = new System.Windows.Forms.Label();
+            this.numericUpDown_H = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Li = new System.Windows.Forms.NumericUpDown();
+            this.label_Ni_ion_rate = new System.Windows.Forms.Label();
+            this.label_Co_ion_rate = new System.Windows.Forms.Label();
+            this.label_Fe_ion_rate = new System.Windows.Forms.Label();
+            this.label_Mn_ion_rate = new System.Windows.Forms.Label();
+            this.label_Cr_ion_rate = new System.Windows.Forms.Label();
+            this.label_Ti_ion_rate = new System.Windows.Forms.Label();
+            this.label_C_ion_rate = new System.Windows.Forms.Label();
+            this.label_N_ion_rate = new System.Windows.Forms.Label();
+            this.label_O_ion_rate = new System.Windows.Forms.Label();
+            this.label_Na_ion_rate = new System.Windows.Forms.Label();
+            this.label_Mg_ion_rate = new System.Windows.Forms.Label();
+            this.label_Ca_ion_rate = new System.Windows.Forms.Label();
+            this.label_K_ion_rate = new System.Windows.Forms.Label();
+            this.label_Si_ion_rate = new System.Windows.Forms.Label();
+            this.label_Al_ion_rate = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.numericUpDown_Ni = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_Co = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_Fe = new System.Windows.Forms.NumericUpDown();
@@ -71,28 +93,12 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.numericUpDown_DensE_exp = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label_Al_ion_rate = new System.Windows.Forms.Label();
-            this.label_Si_ion_rate = new System.Windows.Forms.Label();
-            this.label_K_ion_rate = new System.Windows.Forms.Label();
-            this.label_Ca_ion_rate = new System.Windows.Forms.Label();
-            this.label_Mg_ion_rate = new System.Windows.Forms.Label();
-            this.label_Na_ion_rate = new System.Windows.Forms.Label();
-            this.label_O_ion_rate = new System.Windows.Forms.Label();
-            this.label_N_ion_rate = new System.Windows.Forms.Label();
-            this.label_C_ion_rate = new System.Windows.Forms.Label();
-            this.label_Ti_ion_rate = new System.Windows.Forms.Label();
-            this.label_Cr_ion_rate = new System.Windows.Forms.Label();
-            this.label_Mn_ion_rate = new System.Windows.Forms.Label();
-            this.label_Fe_ion_rate = new System.Windows.Forms.Label();
-            this.label_Co_ion_rate = new System.Windows.Forms.Label();
-            this.label_Ni_ion_rate = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumber)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_H)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Li)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Ni)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Co)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Fe)).BeginInit();
@@ -200,9 +206,11 @@
             // 
             // checkedListBox1
             // 
-            this.checkedListBox1.Font = new System.Drawing.Font("MS UI Gothic", 14F);
+            this.checkedListBox1.Font = new System.Drawing.Font("MS UI Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
+            "H",
+            "Li",
             "C",
             "N",
             "O",
@@ -220,8 +228,9 @@
             "Ni"});
             this.checkedListBox1.Location = new System.Drawing.Point(3, 25);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(75, 340);
+            this.checkedListBox1.Size = new System.Drawing.Size(71, 382);
             this.checkedListBox1.TabIndex = 6;
+            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             // 
             // numericUpDownNumber
             // 
@@ -260,6 +269,10 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label_H_ion_rate);
+            this.panel1.Controls.Add(this.label_Li_ion_rate);
+            this.panel1.Controls.Add(this.numericUpDown_H);
+            this.panel1.Controls.Add(this.numericUpDown_Li);
             this.panel1.Controls.Add(this.label_Ni_ion_rate);
             this.panel1.Controls.Add(this.label_Co_ion_rate);
             this.panel1.Controls.Add(this.label_Fe_ion_rate);
@@ -299,9 +312,215 @@
             this.panel1.Size = new System.Drawing.Size(316, 407);
             this.panel1.TabIndex = 9;
             // 
+            // label_H_ion_rate
+            // 
+            this.label_H_ion_rate.AutoSize = true;
+            this.label_H_ion_rate.Location = new System.Drawing.Point(177, 29);
+            this.label_H_ion_rate.Name = "label_H_ion_rate";
+            this.label_H_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_H_ion_rate.TabIndex = 43;
+            this.label_H_ion_rate.Text = "0.000";
+            // 
+            // label_Li_ion_rate
+            // 
+            this.label_Li_ion_rate.AutoSize = true;
+            this.label_Li_ion_rate.Location = new System.Drawing.Point(177, 52);
+            this.label_Li_ion_rate.Name = "label_Li_ion_rate";
+            this.label_Li_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Li_ion_rate.TabIndex = 42;
+            this.label_Li_ion_rate.Text = "0.000";
+            // 
+            // numericUpDown_H
+            // 
+            this.numericUpDown_H.Location = new System.Drawing.Point(83, 27);
+            this.numericUpDown_H.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.numericUpDown_H.Name = "numericUpDown_H";
+            this.numericUpDown_H.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_H.TabIndex = 41;
+            this.numericUpDown_H.ThousandsSeparator = true;
+            // 
+            // numericUpDown_Li
+            // 
+            this.numericUpDown_Li.Location = new System.Drawing.Point(83, 50);
+            this.numericUpDown_Li.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Li.Name = "numericUpDown_Li";
+            this.numericUpDown_Li.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_Li.TabIndex = 40;
+            this.numericUpDown_Li.ThousandsSeparator = true;
+            // 
+            // label_Ni_ion_rate
+            // 
+            this.label_Ni_ion_rate.AutoSize = true;
+            this.label_Ni_ion_rate.Location = new System.Drawing.Point(177, 366);
+            this.label_Ni_ion_rate.Name = "label_Ni_ion_rate";
+            this.label_Ni_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Ni_ion_rate.TabIndex = 39;
+            this.label_Ni_ion_rate.Text = "0.000";
+            // 
+            // label_Co_ion_rate
+            // 
+            this.label_Co_ion_rate.AutoSize = true;
+            this.label_Co_ion_rate.Location = new System.Drawing.Point(177, 346);
+            this.label_Co_ion_rate.Name = "label_Co_ion_rate";
+            this.label_Co_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Co_ion_rate.TabIndex = 38;
+            this.label_Co_ion_rate.Text = "0.000";
+            // 
+            // label_Fe_ion_rate
+            // 
+            this.label_Fe_ion_rate.AutoSize = true;
+            this.label_Fe_ion_rate.Location = new System.Drawing.Point(177, 325);
+            this.label_Fe_ion_rate.Name = "label_Fe_ion_rate";
+            this.label_Fe_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Fe_ion_rate.TabIndex = 37;
+            this.label_Fe_ion_rate.Text = "0.000";
+            // 
+            // label_Mn_ion_rate
+            // 
+            this.label_Mn_ion_rate.AutoSize = true;
+            this.label_Mn_ion_rate.Location = new System.Drawing.Point(177, 304);
+            this.label_Mn_ion_rate.Name = "label_Mn_ion_rate";
+            this.label_Mn_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Mn_ion_rate.TabIndex = 36;
+            this.label_Mn_ion_rate.Text = "0.000";
+            // 
+            // label_Cr_ion_rate
+            // 
+            this.label_Cr_ion_rate.AutoSize = true;
+            this.label_Cr_ion_rate.Location = new System.Drawing.Point(177, 283);
+            this.label_Cr_ion_rate.Name = "label_Cr_ion_rate";
+            this.label_Cr_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Cr_ion_rate.TabIndex = 35;
+            this.label_Cr_ion_rate.Text = "0.000";
+            // 
+            // label_Ti_ion_rate
+            // 
+            this.label_Ti_ion_rate.AutoSize = true;
+            this.label_Ti_ion_rate.Location = new System.Drawing.Point(177, 262);
+            this.label_Ti_ion_rate.Name = "label_Ti_ion_rate";
+            this.label_Ti_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Ti_ion_rate.TabIndex = 34;
+            this.label_Ti_ion_rate.Text = "0.000";
+            // 
+            // label_C_ion_rate
+            // 
+            this.label_C_ion_rate.AutoSize = true;
+            this.label_C_ion_rate.Location = new System.Drawing.Point(177, 73);
+            this.label_C_ion_rate.Name = "label_C_ion_rate";
+            this.label_C_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_C_ion_rate.TabIndex = 33;
+            this.label_C_ion_rate.Text = "0.000";
+            // 
+            // label_N_ion_rate
+            // 
+            this.label_N_ion_rate.AutoSize = true;
+            this.label_N_ion_rate.Location = new System.Drawing.Point(177, 94);
+            this.label_N_ion_rate.Name = "label_N_ion_rate";
+            this.label_N_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_N_ion_rate.TabIndex = 32;
+            this.label_N_ion_rate.Text = "0.000";
+            // 
+            // label_O_ion_rate
+            // 
+            this.label_O_ion_rate.AutoSize = true;
+            this.label_O_ion_rate.Location = new System.Drawing.Point(177, 115);
+            this.label_O_ion_rate.Name = "label_O_ion_rate";
+            this.label_O_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_O_ion_rate.TabIndex = 31;
+            this.label_O_ion_rate.Text = "0.000";
+            // 
+            // label_Na_ion_rate
+            // 
+            this.label_Na_ion_rate.AutoSize = true;
+            this.label_Na_ion_rate.Location = new System.Drawing.Point(177, 136);
+            this.label_Na_ion_rate.Name = "label_Na_ion_rate";
+            this.label_Na_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Na_ion_rate.TabIndex = 30;
+            this.label_Na_ion_rate.Text = "0.000";
+            // 
+            // label_Mg_ion_rate
+            // 
+            this.label_Mg_ion_rate.AutoSize = true;
+            this.label_Mg_ion_rate.Location = new System.Drawing.Point(177, 157);
+            this.label_Mg_ion_rate.Name = "label_Mg_ion_rate";
+            this.label_Mg_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Mg_ion_rate.TabIndex = 29;
+            this.label_Mg_ion_rate.Text = "0.000";
+            // 
+            // label_Ca_ion_rate
+            // 
+            this.label_Ca_ion_rate.AutoSize = true;
+            this.label_Ca_ion_rate.Location = new System.Drawing.Point(177, 241);
+            this.label_Ca_ion_rate.Name = "label_Ca_ion_rate";
+            this.label_Ca_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Ca_ion_rate.TabIndex = 28;
+            this.label_Ca_ion_rate.Text = "0.000";
+            // 
+            // label_K_ion_rate
+            // 
+            this.label_K_ion_rate.AutoSize = true;
+            this.label_K_ion_rate.Location = new System.Drawing.Point(177, 220);
+            this.label_K_ion_rate.Name = "label_K_ion_rate";
+            this.label_K_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_K_ion_rate.TabIndex = 27;
+            this.label_K_ion_rate.Text = "0.000";
+            // 
+            // label_Si_ion_rate
+            // 
+            this.label_Si_ion_rate.AutoSize = true;
+            this.label_Si_ion_rate.Location = new System.Drawing.Point(177, 199);
+            this.label_Si_ion_rate.Name = "label_Si_ion_rate";
+            this.label_Si_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Si_ion_rate.TabIndex = 26;
+            this.label_Si_ion_rate.Text = "0.000";
+            // 
+            // label_Al_ion_rate
+            // 
+            this.label_Al_ion_rate.AutoSize = true;
+            this.label_Al_ion_rate.Location = new System.Drawing.Point(177, 178);
+            this.label_Al_ion_rate.Name = "label_Al_ion_rate";
+            this.label_Al_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_Al_ion_rate.TabIndex = 25;
+            this.label_Al_ion_rate.Text = "0.000";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(173, 10);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(56, 12);
+            this.label10.TabIndex = 24;
+            this.label10.Text = "イオン化率";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(81, 10);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(17, 12);
+            this.label9.TabIndex = 23;
+            this.label9.Text = "量";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 10);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 12);
+            this.label8.TabIndex = 22;
+            this.label8.Text = "元素";
+            // 
             // numericUpDown_Ni
             // 
-            this.numericUpDown_Ni.Location = new System.Drawing.Point(83, 323);
+            this.numericUpDown_Ni.Location = new System.Drawing.Point(83, 365);
             this.numericUpDown_Ni.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -314,7 +533,7 @@
             // 
             // numericUpDown_Co
             // 
-            this.numericUpDown_Co.Location = new System.Drawing.Point(83, 302);
+            this.numericUpDown_Co.Location = new System.Drawing.Point(83, 344);
             this.numericUpDown_Co.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -327,7 +546,7 @@
             // 
             // numericUpDown_Fe
             // 
-            this.numericUpDown_Fe.Location = new System.Drawing.Point(83, 281);
+            this.numericUpDown_Fe.Location = new System.Drawing.Point(83, 323);
             this.numericUpDown_Fe.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -340,7 +559,7 @@
             // 
             // numericUpDown_Mn
             // 
-            this.numericUpDown_Mn.Location = new System.Drawing.Point(83, 260);
+            this.numericUpDown_Mn.Location = new System.Drawing.Point(83, 302);
             this.numericUpDown_Mn.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -353,7 +572,7 @@
             // 
             // numericUpDown_Cr
             // 
-            this.numericUpDown_Cr.Location = new System.Drawing.Point(83, 239);
+            this.numericUpDown_Cr.Location = new System.Drawing.Point(83, 281);
             this.numericUpDown_Cr.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -366,7 +585,7 @@
             // 
             // numericUpDown_Ti
             // 
-            this.numericUpDown_Ti.Location = new System.Drawing.Point(83, 218);
+            this.numericUpDown_Ti.Location = new System.Drawing.Point(83, 260);
             this.numericUpDown_Ti.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -379,7 +598,7 @@
             // 
             // numericUpDown_Ca
             // 
-            this.numericUpDown_Ca.Location = new System.Drawing.Point(83, 197);
+            this.numericUpDown_Ca.Location = new System.Drawing.Point(83, 239);
             this.numericUpDown_Ca.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -392,7 +611,7 @@
             // 
             // numericUpDown_K
             // 
-            this.numericUpDown_K.Location = new System.Drawing.Point(83, 176);
+            this.numericUpDown_K.Location = new System.Drawing.Point(83, 218);
             this.numericUpDown_K.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -405,7 +624,7 @@
             // 
             // numericUpDown_Si
             // 
-            this.numericUpDown_Si.Location = new System.Drawing.Point(83, 155);
+            this.numericUpDown_Si.Location = new System.Drawing.Point(83, 197);
             this.numericUpDown_Si.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -418,7 +637,7 @@
             // 
             // numericUpDown_Al
             // 
-            this.numericUpDown_Al.Location = new System.Drawing.Point(83, 134);
+            this.numericUpDown_Al.Location = new System.Drawing.Point(83, 176);
             this.numericUpDown_Al.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -431,7 +650,7 @@
             // 
             // numericUpDown_Mg
             // 
-            this.numericUpDown_Mg.Location = new System.Drawing.Point(83, 113);
+            this.numericUpDown_Mg.Location = new System.Drawing.Point(83, 155);
             this.numericUpDown_Mg.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -444,7 +663,7 @@
             // 
             // numericUpDown_Na
             // 
-            this.numericUpDown_Na.Location = new System.Drawing.Point(83, 92);
+            this.numericUpDown_Na.Location = new System.Drawing.Point(83, 134);
             this.numericUpDown_Na.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -457,7 +676,7 @@
             // 
             // numericUpDown_O
             // 
-            this.numericUpDown_O.Location = new System.Drawing.Point(83, 71);
+            this.numericUpDown_O.Location = new System.Drawing.Point(83, 113);
             this.numericUpDown_O.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -470,7 +689,7 @@
             // 
             // numericUpDown_N
             // 
-            this.numericUpDown_N.Location = new System.Drawing.Point(83, 50);
+            this.numericUpDown_N.Location = new System.Drawing.Point(83, 92);
             this.numericUpDown_N.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -483,7 +702,7 @@
             // 
             // numericUpDown_C
             // 
-            this.numericUpDown_C.Location = new System.Drawing.Point(83, 29);
+            this.numericUpDown_C.Location = new System.Drawing.Point(83, 71);
             this.numericUpDown_C.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -722,168 +941,6 @@
             0,
             0});
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 10);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 12);
-            this.label8.TabIndex = 22;
-            this.label8.Text = "元素";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(81, 10);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(17, 12);
-            this.label9.TabIndex = 23;
-            this.label9.Text = "量";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(173, 10);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(56, 12);
-            this.label10.TabIndex = 24;
-            this.label10.Text = "イオン化率";
-            // 
-            // label_Al_ion_rate
-            // 
-            this.label_Al_ion_rate.AutoSize = true;
-            this.label_Al_ion_rate.Location = new System.Drawing.Point(177, 136);
-            this.label_Al_ion_rate.Name = "label_Al_ion_rate";
-            this.label_Al_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Al_ion_rate.TabIndex = 25;
-            this.label_Al_ion_rate.Text = "0.000";
-            // 
-            // label_Si_ion_rate
-            // 
-            this.label_Si_ion_rate.AutoSize = true;
-            this.label_Si_ion_rate.Location = new System.Drawing.Point(177, 157);
-            this.label_Si_ion_rate.Name = "label_Si_ion_rate";
-            this.label_Si_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Si_ion_rate.TabIndex = 26;
-            this.label_Si_ion_rate.Text = "0.000";
-            // 
-            // label_K_ion_rate
-            // 
-            this.label_K_ion_rate.AutoSize = true;
-            this.label_K_ion_rate.Location = new System.Drawing.Point(177, 178);
-            this.label_K_ion_rate.Name = "label_K_ion_rate";
-            this.label_K_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_K_ion_rate.TabIndex = 27;
-            this.label_K_ion_rate.Text = "0.000";
-            // 
-            // label_Ca_ion_rate
-            // 
-            this.label_Ca_ion_rate.AutoSize = true;
-            this.label_Ca_ion_rate.Location = new System.Drawing.Point(177, 199);
-            this.label_Ca_ion_rate.Name = "label_Ca_ion_rate";
-            this.label_Ca_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Ca_ion_rate.TabIndex = 28;
-            this.label_Ca_ion_rate.Text = "0.000";
-            // 
-            // label_Mg_ion_rate
-            // 
-            this.label_Mg_ion_rate.AutoSize = true;
-            this.label_Mg_ion_rate.Location = new System.Drawing.Point(177, 115);
-            this.label_Mg_ion_rate.Name = "label_Mg_ion_rate";
-            this.label_Mg_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Mg_ion_rate.TabIndex = 29;
-            this.label_Mg_ion_rate.Text = "0.000";
-            // 
-            // label_Na_ion_rate
-            // 
-            this.label_Na_ion_rate.AutoSize = true;
-            this.label_Na_ion_rate.Location = new System.Drawing.Point(177, 94);
-            this.label_Na_ion_rate.Name = "label_Na_ion_rate";
-            this.label_Na_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Na_ion_rate.TabIndex = 30;
-            this.label_Na_ion_rate.Text = "0.000";
-            // 
-            // label_O_ion_rate
-            // 
-            this.label_O_ion_rate.AutoSize = true;
-            this.label_O_ion_rate.Location = new System.Drawing.Point(177, 73);
-            this.label_O_ion_rate.Name = "label_O_ion_rate";
-            this.label_O_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_O_ion_rate.TabIndex = 31;
-            this.label_O_ion_rate.Text = "0.000";
-            // 
-            // label_N_ion_rate
-            // 
-            this.label_N_ion_rate.AutoSize = true;
-            this.label_N_ion_rate.Location = new System.Drawing.Point(177, 52);
-            this.label_N_ion_rate.Name = "label_N_ion_rate";
-            this.label_N_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_N_ion_rate.TabIndex = 32;
-            this.label_N_ion_rate.Text = "0.000";
-            // 
-            // label_C_ion_rate
-            // 
-            this.label_C_ion_rate.AutoSize = true;
-            this.label_C_ion_rate.Location = new System.Drawing.Point(177, 31);
-            this.label_C_ion_rate.Name = "label_C_ion_rate";
-            this.label_C_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_C_ion_rate.TabIndex = 33;
-            this.label_C_ion_rate.Text = "0.000";
-            // 
-            // label_Ti_ion_rate
-            // 
-            this.label_Ti_ion_rate.AutoSize = true;
-            this.label_Ti_ion_rate.Location = new System.Drawing.Point(177, 220);
-            this.label_Ti_ion_rate.Name = "label_Ti_ion_rate";
-            this.label_Ti_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Ti_ion_rate.TabIndex = 34;
-            this.label_Ti_ion_rate.Text = "0.000";
-            // 
-            // label_Cr_ion_rate
-            // 
-            this.label_Cr_ion_rate.AutoSize = true;
-            this.label_Cr_ion_rate.Location = new System.Drawing.Point(177, 241);
-            this.label_Cr_ion_rate.Name = "label_Cr_ion_rate";
-            this.label_Cr_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Cr_ion_rate.TabIndex = 35;
-            this.label_Cr_ion_rate.Text = "0.000";
-            // 
-            // label_Mn_ion_rate
-            // 
-            this.label_Mn_ion_rate.AutoSize = true;
-            this.label_Mn_ion_rate.Location = new System.Drawing.Point(177, 262);
-            this.label_Mn_ion_rate.Name = "label_Mn_ion_rate";
-            this.label_Mn_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Mn_ion_rate.TabIndex = 36;
-            this.label_Mn_ion_rate.Text = "0.000";
-            // 
-            // label_Fe_ion_rate
-            // 
-            this.label_Fe_ion_rate.AutoSize = true;
-            this.label_Fe_ion_rate.Location = new System.Drawing.Point(177, 283);
-            this.label_Fe_ion_rate.Name = "label_Fe_ion_rate";
-            this.label_Fe_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Fe_ion_rate.TabIndex = 37;
-            this.label_Fe_ion_rate.Text = "0.000";
-            // 
-            // label_Co_ion_rate
-            // 
-            this.label_Co_ion_rate.AutoSize = true;
-            this.label_Co_ion_rate.Location = new System.Drawing.Point(177, 304);
-            this.label_Co_ion_rate.Name = "label_Co_ion_rate";
-            this.label_Co_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Co_ion_rate.TabIndex = 38;
-            this.label_Co_ion_rate.Text = "0.000";
-            // 
-            // label_Ni_ion_rate
-            // 
-            this.label_Ni_ion_rate.AutoSize = true;
-            this.label_Ni_ion_rate.Location = new System.Drawing.Point(177, 324);
-            this.label_Ni_ion_rate.Name = "label_Ni_ion_rate";
-            this.label_Ni_ion_rate.Size = new System.Drawing.Size(31, 12);
-            this.label_Ni_ion_rate.TabIndex = 39;
-            this.label_Ni_ion_rate.Text = "0.000";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -903,6 +960,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumber)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_H)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Li)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Ni)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Co)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Fe)).EndInit();
@@ -991,6 +1050,10 @@
         private System.Windows.Forms.Label label_Ca_ion_rate;
         private System.Windows.Forms.Label label_K_ion_rate;
         private System.Windows.Forms.Label label_Si_ion_rate;
+        private System.Windows.Forms.Label label_H_ion_rate;
+        private System.Windows.Forms.Label label_Li_ion_rate;
+        private System.Windows.Forms.NumericUpDown numericUpDown_H;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Li;
     }
 }
 
