@@ -54,6 +54,7 @@
     <Compile Include="LineSynth.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Molecular.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

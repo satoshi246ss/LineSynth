@@ -19,7 +19,7 @@ namespace LineSynth
             InitializeComponent();
 
             //init
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < Max_Atom_Num; i++)
             {
                 atomdata[i] = new Atom_Data();
             }
@@ -32,6 +32,7 @@ namespace LineSynth
             electron_density = (double)numericUpDown_DensE.Value * Math.Pow(10,(double)numericUpDown_DensE_exp.Value);
             ReadData();
             ReadAtomDataAll();
+            ReadMolecularDataAll();
     
             PlotSinCos();
         }

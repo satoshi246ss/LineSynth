@@ -93,6 +93,8 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.numericUpDown_DensE_exp = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_N2_1P = new System.Windows.Forms.NumericUpDown();
+            this.label_N2_ion_rate = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumber)).BeginInit();
@@ -121,6 +123,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_DensE)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_DensE_exp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_N2_1P)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
@@ -225,10 +228,11 @@
             "Mn",
             "Fe",
             "Co",
-            "Ni"});
+            "Ni",
+            "N2 1P"});
             this.checkedListBox1.Location = new System.Drawing.Point(3, 25);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(71, 382);
+            this.checkedListBox1.Size = new System.Drawing.Size(75, 382);
             this.checkedListBox1.TabIndex = 6;
             this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             // 
@@ -269,6 +273,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label_N2_ion_rate);
+            this.panel1.Controls.Add(this.numericUpDown_N2_1P);
             this.panel1.Controls.Add(this.label_H_ion_rate);
             this.panel1.Controls.Add(this.label_Li_ion_rate);
             this.panel1.Controls.Add(this.numericUpDown_H);
@@ -941,6 +947,28 @@
             0,
             0});
             // 
+            // numericUpDown_N2_1P
+            // 
+            this.numericUpDown_N2_1P.Location = new System.Drawing.Point(83, 385);
+            this.numericUpDown_N2_1P.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_N2_1P.Name = "numericUpDown_N2_1P";
+            this.numericUpDown_N2_1P.Size = new System.Drawing.Size(88, 19);
+            this.numericUpDown_N2_1P.TabIndex = 44;
+            this.numericUpDown_N2_1P.ThousandsSeparator = true;
+            // 
+            // label_N2_ion_rate
+            // 
+            this.label_N2_ion_rate.AutoSize = true;
+            this.label_N2_ion_rate.Location = new System.Drawing.Point(177, 387);
+            this.label_N2_ion_rate.Name = "label_N2_ion_rate";
+            this.label_N2_ion_rate.Size = new System.Drawing.Size(31, 12);
+            this.label_N2_ion_rate.TabIndex = 45;
+            this.label_N2_ion_rate.Text = "0.000";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -986,6 +1014,7 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_DensE_exp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_N2_1P)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1054,6 +1083,8 @@
         private System.Windows.Forms.Label label_Li_ion_rate;
         private System.Windows.Forms.NumericUpDown numericUpDown_H;
         private System.Windows.Forms.NumericUpDown numericUpDown_Li;
+        private System.Windows.Forms.Label label_N2_ion_rate;
+        private System.Windows.Forms.NumericUpDown numericUpDown_N2_1P;
     }
 }
 

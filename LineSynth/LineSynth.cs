@@ -67,12 +67,12 @@ namespace LineSynth
         public int atomic_number { get; set;}// 原子番号
         public int state { get; set; }       // 0:中性 1:１価　2:２価 ・・・
         public string name { get; set; }     // 名称 "NaI"等
-        public List<Level_Data> leveldata = new List<Level_Data>();
-        public List<Line_Data> linedata = new List<Line_Data>();
+        public List<Level_Data>  leveldata      = new List<Level_Data>();
+        public List<Line_Data>   linedata       = new List<Line_Data>();
         public List<EnergyLevel> energy_level_1 = new List<EnergyLevel>();
         // イオン用
         public List<Level_Data > leveldata_2 = new List<Level_Data>();
-        public List<Line_Data  > linedata_2 = new List<Line_Data>();
+        public List<Line_Data  > linedata_2  = new List<Line_Data>();
         public List<EnergyLevel> energy_level_2 = new List<EnergyLevel>();
 
         public double ionization_rate()
@@ -178,12 +178,16 @@ namespace LineSynth
             }
         }
     }
-
+    //
+    //
+    //
     public partial class Form1 : Form
     {
+        const int Max_Atom_Num= 300;
         const int Sim_max_bin = 12000;
         const int Sim_wl_step = 100; //  1 unit = 0.001nm
-        Atom_Data[] atomdata = new Atom_Data[100];
+        Atom_Data[] atomdata = new Atom_Data[Max_Atom_Num];
+        Molecular_band_system N2_1st = new Molecular_band_system();
         Level_Data levdata1 = new Level_Data();
         List<PointF> obs_data = new List<PointF>();
         List<PointF> sim_data = new List<PointF>();
@@ -192,7 +196,7 @@ namespace LineSynth
         PointF pf;
         double temperature ;
         double electron_density ;
-        double k = 1.38064852e-23; //m2 kg s-2 K-1
+        //double k = 1.38064852e-23; //m2 kg s-2 K-1
 
         private void ReadData()
         {
@@ -381,7 +385,7 @@ namespace LineSynth
             using (StreamWriter w = new StreamWriter(fn + ".txt"))   //@"O_ii_level.txt.txt"
             {
                 double d;
-                string line = "", s, s1;
+                string line = "", s;
 
                 string[] stArrayData = line.Split(' ');
 
@@ -448,9 +452,19 @@ namespace LineSynth
             }
         }
 
-        private void ReadAtomDataAll()
+        private void ReadMolecularDataAll()
         {
+            N2_1st.ReadAkiData("atom\\N2_1st_pos_Aki_21_21.txt");
+            N2_1st.make_level_data_N2("atom\\Molecular");
+            N2_1st.make_Aki_data_N2("atom\\Molecular");
+            ReadAtomData("atom\\Molecular_Aki_N2.txt");  // 200 N2 First Positive
+            ReadEnergyLevel("atom\\Molecular_N2.txt", 200, 0);
+        }
+
+        private void ReadAtomDataAll()
+        {            
             ReadAtomData("atom\\H_I.txt");  // 1
+            ReadEnergyLevel("atom\\H_I_Level.txt", 1, 0);
             // 3 Li
             ReadAtomData("atom\\Li_I.txt"); 
             ReadAtomData("atom\\Li_II.txt");
@@ -550,6 +564,7 @@ namespace LineSynth
             numericUpDown_Fe.Value = (decimal)9.00e5;
             numericUpDown_Co.Value = (decimal)2250;
             numericUpDown_Ni.Value = (decimal)4.93e4;
+            numericUpDown_N2_1P.Value = (decimal)2.5e6;
         }
         private void checkedList()
         {
@@ -588,6 +603,9 @@ namespace LineSynth
             atomdata[27].Enabled = checkedListBox1.GetItemChecked(index);
             index = checkedListBox1.FindString("Ni");
             atomdata[28].Enabled = checkedListBox1.GetItemChecked(index);
+
+            index = checkedListBox1.FindString("N2 1P");
+            atomdata[200].Enabled = checkedListBox1.GetItemChecked(index);
         }
         private void cal_line_all()
         {
@@ -697,6 +715,12 @@ namespace LineSynth
             {
                 Cal_Line(elm, (double)numericUpDown_Ni.Value * n, temp, dens_e);
                 label_Ni_ion_rate.Text = (atomdata[elm].ionization_rate()).ToString("0.000");
+            }
+            index = checkedListBox1.FindString("N2 1P"); elm = 200;
+            if (atomdata[elm].Enabled)
+            {
+                Cal_Line(elm, (double)numericUpDown_N2_1P.Value * n, temp, dens_e);
+                label_N2_ion_rate.Text = (atomdata[elm].ionization_rate()).ToString("0.000");
             }
         }
 
