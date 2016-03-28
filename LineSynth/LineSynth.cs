@@ -67,7 +67,8 @@ namespace LineSynth
         public int atomic_number { get; set;}// 原子番号
         public int state { get; set; }       // 0:中性 1:１価　2:２価 ・・・
         public string name { get; set; }     // 名称 "NaI"等
-        public List<Level_Data>  leveldata      = new List<Level_Data>();
+        public double Be { get; set; }       // Be:分子回転定数
+        public List<Level_Data> leveldata = new List<Level_Data>();
         public List<Line_Data>   linedata       = new List<Line_Data>();
         public List<EnergyLevel> energy_level_1 = new List<EnergyLevel>();
         // イオン用
@@ -155,17 +156,30 @@ namespace LineSynth
             return ni_na;
         }
 
+        // ライン毎のフォトン数計算
         public void cal_photon()
         {
             if (Enabled)
             {
                 // 中性
-                for( int i=0 ; i< leveldata.Count(); i++)
+                for (int i = 0; i < leveldata.Count(); i++)
                 {
                     Level_Data ld = leveldata[i];
-                    double e1 = -(ld.Ek - 0.0)*ev / (k * temperature);
+                    double e1 = -(ld.Ek - 0.0) * ev / (k * temperature);
                     double nn = number * (ld.gk / Zi) * Math.Exp(e1);
-                    linedata[i].photon_number = nn * ld.Aki;
+                    if (atomic_number < 200)
+                    {
+                        // 単原子
+                        linedata[i].photon_number = nn * ld.Aki;
+                    }
+                    else
+                    {
+                        // 分子
+                        double photon_number = nn * ld.Aki;
+
+                        linedata[i].photon_number = nn * ld.Aki;
+
+                    }
                 }
                 // 1価イオン
                 for(int i = 0; i < leveldata_2.Count(); i++)
@@ -456,7 +470,7 @@ namespace LineSynth
         {
             N2_1st.ReadAkiData("atom\\N2_1st_pos_Aki_21_21.txt");
             N2_1st.make_level_data_N2("atom\\Molecular");
-            N2_1st.make_Aki_data_N2("atom\\Molecular");
+            N2_1st.make_Aki_data_N2("atom\\Molecular", temperature );
             ReadAtomData("atom\\Molecular_Aki_N2.txt");  // 200 N2 First Positive
             ReadEnergyLevel("atom\\Molecular_N2.txt", 200, 0);
         }
@@ -719,6 +733,10 @@ namespace LineSynth
             index = checkedListBox1.FindString("N2 1P"); elm = 200;
             if (atomdata[elm].Enabled)
             {
+                N2_1st.make_Aki_data_N2("atom\\Molecular", temperature);
+                ReadAtomData("atom\\Molecular_Aki_N2.txt");  // 200 N2 First Positive
+                ReadEnergyLevel("atom\\Molecular_N2.txt", 200, 0);
+
                 Cal_Line(elm, (double)numericUpDown_N2_1P.Value * n, temp, dens_e);
                 label_N2_ion_rate.Text = (atomdata[elm].ionization_rate()).ToString("0.000");
             }
@@ -780,7 +798,7 @@ namespace LineSynth
 
         private void button_x05ymax_Click(object sender, EventArgs e)
         {
-            string s = chart1.Series["sim"].ChartArea;//
+            string s = chart1.Series["Simulation"].ChartArea;//
             double ymin = chart1.ChartAreas[s].AxisY2.Minimum;
             double ymax = chart1.ChartAreas[s].AxisY2.Maximum;
             chart1.ChartAreas[s].AxisY2.Minimum = ymin * 0.5;
@@ -789,7 +807,7 @@ namespace LineSynth
         // 動作不良
         private void button_x2ymax_Click(object sender, EventArgs e)
         {
-            string s = chart1.Series["sim"].ChartArea;//
+            string s = chart1.Series["Simulation"].ChartArea;//
             double ymin = chart1.ChartAreas[s].AxisY2.Minimum;
             double ymax = chart1.ChartAreas[s].AxisY2.Maximum;
             chart1.ChartAreas[s].AxisY2.Minimum = ymin * 2;
